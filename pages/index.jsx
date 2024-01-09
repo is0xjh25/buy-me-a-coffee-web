@@ -6,7 +6,7 @@ import styles from '../styles/Home.module.css'
 
 export default function Home() {
   // Contract Address & ABI
-  const contractAddress = "0xDBa03676a2fBb6711CB652beF5B7416A53c1421D";
+  const contractAddress = "0x640C34B30D2580154C6aE8E49c9637DD04511A83";
   const contractABI = abi.abi;
 
   // Component state
@@ -60,7 +60,7 @@ export default function Home() {
     }
   }
 
-  const buyCoffee = async () => {
+  const buyCoffee = async (price) => {
     try {
       const {ethereum} = window;
 
@@ -72,12 +72,12 @@ export default function Home() {
           contractABI,
           signer
         );
-
         console.log("buying coffee..")
+        console.log(typeof(price))
         const coffeeTxn = await buyMeACoffee.buyCoffee(
           name ? name : "anon",
           message ? message : "Enjoy your coffee!",
-          {value: ethers.utils.parseEther("0.001")}
+          { value: ethers.utils.parseEther(price.toString()) }
         );
 
         await coffeeTxn.wait();
@@ -166,14 +166,14 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Buy Albert a Coffee!</title>
+        <title>Buy @is0xjh25 a Coffee!</title>
         <meta name="description" content="Tipping site" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Buy Albert a Coffee!
+          Buy @is0xjh25 a Coffee!
         </h1>
         
         {currentAccount ? (
@@ -195,7 +195,7 @@ export default function Home() {
               <br/>
               <div class="formgroup">
                 <label>
-                  Send Albert a message
+                  Send @is0xjh25 a message
                 </label>
                 <br/>
 
@@ -211,9 +211,17 @@ export default function Home() {
               <div>
                 <button
                   type="button"
-                  onClick={buyCoffee}
+                  onClick={() => buyCoffee(0.001)}
                 >
-                  Send 1 Coffee for 0.001ETH
+                  Send 1 small Coffee for 0.001ETH
+                </button>
+              </div>
+              <div>
+              <button
+                  type="button"
+                  onClick={() => buyCoffee(0.003)}
+                >
+                  Send 1 large Coffee for 0.003ETH
                 </button>
               </div>
             </form>
